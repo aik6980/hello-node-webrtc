@@ -14,7 +14,8 @@ var options = {
 var server = require('http').createServer(app);
 app.use('/peerjs', ExpressPeerServer(server, options));
 
-server.listen(9000);
+// process.env.PORT for Heroku
+server.listen(process.env.PORT || 9000);
 
 server.on('connection', function(id){
     console.log('someone connected' + id);
