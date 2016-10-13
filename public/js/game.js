@@ -1,6 +1,6 @@
 // connection info
 var host = document.location.hostname;
-var port = 443;
+var port = document.location.port;
 var path = "/peerjs";
 
 console.log(host);
@@ -11,7 +11,7 @@ var peers = {};
 
 var peer = new Peer({
 	host: host,
-	port: port,
+	//port: port,
 	path: path
 });
 
