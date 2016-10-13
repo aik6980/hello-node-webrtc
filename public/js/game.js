@@ -10,8 +10,8 @@ console.log(port);
 var peers = {};
 
 var peer = new Peer({
-	host: host,
-	//port: port,
+	host: '/',
+	port: '',
 	path: path
 });
 
