@@ -1,7 +1,10 @@
 // connection info
-var host = "localhost";
-var port = 9000;
+var host = document.location.hostname;
+var port = parseInt(document.location.port);
 var path = "/peerjs";
+
+console.log(host);
+console.log(port);
 
 // peers
 var peers = {};
