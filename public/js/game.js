@@ -1,6 +1,6 @@
 // connection info
 var host = document.location.hostname;
-var port = parseInt(document.location.port);
+var port = 443;
 var path = "/peerjs";
 
 console.log(host);
