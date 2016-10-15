@@ -1,4 +1,5 @@
 // connection info
+// https://github.com/sugendran/webrtc-tanks/blob/master/js/game.js
 var host = document.location.hostname;
 var port = document.location.port;
 var path = "/peerjs";
@@ -7,6 +8,7 @@ console.log(host);
 console.log(port);
 
 // peers
+var my_peer_id = '';
 var peers = {};
 
 var peer = new Peer({
@@ -17,7 +19,20 @@ var peer = new Peer({
 
 peer.on('open', function(id){
 	document.getElementById("peer_info").innerHTML = 'my id: ' + id;
+	connect_to_existing_players();
 });
+
+function connect_to_existing_players(){
+	// the following address is defined when we start the server;
+	var peerjs_local_address = '/peerjs';
+	
+	var url = window.location.protocol + '//' + host + ':' + port + peerjs_local_address + '/peerjs/peers';
+	$.getJSON(url, function(ps){
+		_.each(ps, function(p){
+			console.log('peer list: ' + p);
+		});
+	});
+}
 
 
 // resources
