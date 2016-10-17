@@ -123,12 +123,13 @@ var main_state = {
 		// create a bitmap data
 		// http://phaser.io/examples/v2/bitmapdata/cached-bitmapdata
 		var bmd = game.add.bitmapData(32, 32);
-		bmd.context.fillStyle =  'rgb(255,0,0)';
+		bmd.context.fillStyle =  'rgb(255,255,255)';
 		bmd.context.fillRect(0,0,32,32);
 
-		game.cache.addBitmapData('red32', bmd);
+		game.cache.addBitmapData('white32', bmd);
 
-		game.add.sprite(10,10,game.cache.getBitmapData('red32'));
+		player = game.add.sprite(10,10,game.cache.getBitmapData('white32'));
+		player.tint = Phaser.Color.getColor(255,255,0);
 		
 		// keyboard control
 		cursors = game.input.keyboard.createCursorKeys();
