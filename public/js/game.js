@@ -28,8 +28,9 @@ peer.on('open', function(id){
 
 peer.on('connection', function(conn){
 	console.log('new connection ' + conn.peer);
+	
 	conn.on('data', function(data){
-		console.log(conn.peer + ' data on');
+		console.log('data');
 		var t = MESSAGE_TYPE[data.type];
 		if(!t){
 			console.err('unrecognised msg: ' + data);
@@ -37,7 +38,7 @@ peer.on('connection', function(conn){
 		}
 		handle_msg(t, data);
 	});
-
+	
 	conn.on('close', function(){
 		// need to tell the server I'm out? 
 		console.log('connection closed');
@@ -47,9 +48,14 @@ peer.on('connection', function(conn){
 function connect_to_player(id){
 	console.log('peers: ' + peers);
 	if(!_.has(peers, id)){
-		peers[id] = peer.connect(id);
-		send_to_peer(id, MESSAGE_TYPE.HELLO);
-		console.log('connecting to peer ' + id);
+		var conn = peer.connect(id);
+		peers[id] = conn;
+		
+		// make sure we waited for the connection to be succesfully opened before sending data
+		conn.on('open', function(){
+			send_to_peer(id, MESSAGE_TYPE.HELLO);
+			console.log('connecting to peer ' + id);
+		});
 	}
 }
 
@@ -103,13 +109,14 @@ function handle_hello(data){
 
 // resources
 var game;
+var cursors; // kb
 
 // phaser game
 // http://www.lessmilk.com/tutorial/2d-platformer-phaser
 var main_state = {
 	
 	preload: function(){
-
+		
 	},
 
 	create: function (){
@@ -122,10 +129,13 @@ var main_state = {
 		game.cache.addBitmapData('red32', bmd);
 
 		game.add.sprite(10,10,game.cache.getBitmapData('red32'));
+		
+		// keyboard control
+		cursors = game.input.keyboard.createCursorKeys();
 	},
 
 	update: function(){
-
+		
 	}
 };
 
