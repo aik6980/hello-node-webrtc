@@ -24,6 +24,9 @@ peer.on('open', function(id){
 	// store my peer id
 	my_peer_id = id;
 	connect_to_existing_players();
+
+	// create a new player
+	create_new_player();
 });
 
 peer.on('connection', function(conn){
@@ -111,6 +114,15 @@ function handle_hello(data){
 var game;
 var cursors; // kb
 
+var players = [];
+
+function create_new_player(){
+	var player = game.add.sprite(10,10,game.cache.getBitmapData('white32'));
+	player.tint = Math.random() * 0xffffff;
+
+	players.push(player);
+}
+
 // phaser game
 // http://www.lessmilk.com/tutorial/2d-platformer-phaser
 var main_state = {
@@ -127,9 +139,6 @@ var main_state = {
 		bmd.context.fillRect(0,0,32,32);
 
 		game.cache.addBitmapData('white32', bmd);
-
-		player = game.add.sprite(10,10,game.cache.getBitmapData('white32'));
-		player.tint = Phaser.Color.getColor(255,255,0);
 		
 		// keyboard control
 		cursors = game.input.keyboard.createCursorKeys();
